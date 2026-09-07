@@ -3,6 +3,14 @@ class Model {
     protected $db;
 
     public function __construct() {
-        $this->db = null; // placeholder: conectar DB aquí si es necesario
+        $this->db = $this->db();
+    }
+
+    protected function db() {
+        try {
+            return Database::getConnection();
+        } catch (Throwable $e) {
+            return null;
+        }
     }
 }

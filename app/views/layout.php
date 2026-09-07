@@ -1,7 +1,4 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 $base = BASE_URL ?: '';
 ?><!DOCTYPE html>
 <html lang="es">

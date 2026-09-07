@@ -9,21 +9,9 @@ class Router {
         $uri = preg_replace('#/index(?:\.php)?$#i', '', $uri);
         $uri = preg_replace('#^/(?:.+?/)?public#i', '', $uri);
 
-        $basePatterns = [
-            '/Proyecto/amelieJoyeria',
-            '/amelieJoyeria',
-            '/proyecto/ameliejoyeria',
-            '/Proyecto',
-            '/proyecto',
-            '/amelieJoyeria',
-            ''
-        ];
-
-        foreach ($basePatterns as $base) {
-            if ($base !== '' && stripos($uri, $base) === 0) {
-                $uri = substr($uri, strlen($base));
-                break;
-            }
+        $baseUrl = defined('BASE_URL') ? trim(BASE_URL, '/') : '';
+        if ($baseUrl !== '') {
+            $uri = preg_replace('#^/?' . preg_quote($baseUrl, '#') . '#i', '', $uri);
         }
 
         $uri = trim($uri, '/');

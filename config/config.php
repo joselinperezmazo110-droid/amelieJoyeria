@@ -1,7 +1,7 @@
 <?php
 define('BASE_PATH', dirname(__DIR__));
 $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-$scriptDir = dirname($scriptName);
+$scriptDir = rtrim(dirname($scriptName), '/');
 $baseUrl = str_replace('/public', '', $scriptDir);
 if ($baseUrl === '/' || $baseUrl === '\\' || $baseUrl === '.') {
     $baseUrl = '';
