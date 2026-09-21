@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.alert('La demostración está lista. Conecta aquí tu pasarela de pago.');
     });
   });
+
   document.querySelectorAll('.notice').forEach((notice) => {
     window.setTimeout(() => notice.remove(), 5000);
   });
