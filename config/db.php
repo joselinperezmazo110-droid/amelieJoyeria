@@ -18,5 +18,6 @@ try {
 		]
 	);
 } catch (PDOException $exception) {
+	error_log('Database connection failed: ' . $exception->getMessage());
 	$pdo = null;
 }

@@ -8,6 +8,7 @@ $page_title = $page_title ?? 'Amelie Joyería';
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?= e($page_title) ?> | Amelie Joyería</title>
 	<link rel="stylesheet" href="<?= base_url('../assets/css/estilos.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('../assets/css/tienda.css?v=2') ?>">
 	<style>
 		.brand-logo { display: block; width: 218px; height: auto; }
 		.brand:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }

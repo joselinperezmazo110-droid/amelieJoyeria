@@ -14,24 +14,29 @@ function e(?string $value): string
 
 function format_cop(float $amount): string
 {
-	if ($amount > 0 && $amount < 1000) $amount *= 1000;
 	return '$ ' . number_format($amount, 0, ',', '.') . ' COP';
 }
 
 function product_image(array $product): string
 {
-	$images = [
-		'Anillo Aura' => '../assets/images/anillo-aura.jpg',
-		'Collar Numa' => '../assets/images/collar-numa.jpg',
-		'Pendientes Vela' => '../assets/images/pendientes-vela.webp',
-		'Pulsera Origen' => '../assets/images/pulsera-origen.webp',
-	];
-	return $images[$product['nombre']] ?? (!empty($product['imagen']) ? (string) $product['imagen'] : '../assets/images/joya-generica.webp');
+	$image = (string) ($product['imagen'] ?? '');
+	if (!preg_match('/^(?:uploads\/)?[A-Za-z0-9_-]+\.(?:jpe?g|png|webp)$/i', $image)) {
+		$image = 'joya-generica.webp';
+	}
+	return '../assets/images/' . $image;
+}
+
+function product_price(array $product): float
+{
+	$discount = max(0, min(90, (int) ($product['descuento_porcentaje'] ?? 0)));
+	return round((float) $product['precio'] * (1 - $discount / 100), 2);
 }
 
 function base_url(string $path = ''): string
 {
-	return '/trabajo/joyeria/' . ltrim($path, '/');
+	$directory = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? '/'), '/');
+	$base = $directory === '' ? '/' : $directory . '/';
+	return $base . ltrim($path, '/');
 }
 
 function redirect(string $path): never
@@ -120,7 +125,7 @@ function get_products(?string $search = null, int $limit = 0): array
 		$sql .= ' AND (nombre LIKE :search OR categoria LIKE :search)';
 		$params['search'] = '%' . $search . '%';
 	}
-	$sql .= ' ORDER BY destacado DESC, id DESC';
+	$sql .= ' ORDER BY (descuento_porcentaje > 0) DESC, destacado DESC, id DESC';
 	if ($limit > 0) $sql .= ' LIMIT ' . $limit;
 	$statement = $pdo->prepare($sql);
 	$statement->execute($params);
@@ -154,7 +159,7 @@ function cart_products(): array
 
 function cart_total(array $items): float
 {
-	return array_sum(array_map(fn($item) => (float) $item['precio'] * (int) $item['cantidad'], $items));
+	return array_sum(array_map(fn($item) => product_price($item) * (int) $item['cantidad'], $items));
 }
 
 function get_orders(int $user_id): array
