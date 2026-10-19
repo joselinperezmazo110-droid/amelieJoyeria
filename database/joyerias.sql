@@ -59,6 +59,17 @@ FROM (
 ) AS seed
 WHERE NOT EXISTS (SELECT 1 FROM productos WHERE productos.nombre = seed.nombre);
 
+INSERT INTO productos (nombre, categoria, descripcion, precio, imagen, destacado)
+SELECT seed.nombre, seed.categoria, seed.descripcion, seed.precio, seed.imagen, 0
+FROM (
+	SELECT 'Anillo Brillo Eterno' AS nombre, 'Anillos' AS categoria, 'Anillo en plata de ley 925 con zirconias engastadas alrededor. Una silueta luminosa para usar a diario o en ocasiones especiales.' AS descripcion, 159000.00 AS precio, '192627C01_RGB.webp' AS imagen
+	UNION ALL SELECT 'Anillo Tres Luces', 'Anillos', 'Anillo en plata de ley 925 con tres zirconias brillantes en una montura delicada. Un diseño romántico y fácil de combinar.', 149000.00, '192232C01_RGB.webp'
+	UNION ALL SELECT 'Collar Trenza Dorada', 'Collares', 'Cadena de eslabones trenzados con acabado dorado y caída clásica. Una pieza versátil para llevar sola o combinar con colgantes.', 135000.00, '364687C00_RGB.webp'
+	UNION ALL SELECT 'Pulsera Flor de Luz', 'Pulseras', 'Pulsera de acabado plateado con un delicado detalle floral central. Ligera y elegante para completar looks cotidianos.', 118000.00, '45298916_x1.webp'
+	UNION ALL SELECT 'Pulsera Corazón Rosa', 'Pulseras', 'Pulsera de eslabones flexibles con dije de corazón y detalles rosados. Un acento delicado para combinar con otras piezas.', 112000.00, '925-Sterling-Silver-Zircon-Love-Heart-Simple-Bracelet-DIY-Bead-Making-Fit-Original-Pandora-Bracelets-Fine.jpg_350x350xz.jpg_.webp'
+) AS seed
+WHERE NOT EXISTS (SELECT 1 FROM productos WHERE productos.nombre = seed.nombre);
+
 UPDATE productos SET precio = CASE nombre
 	WHEN 'Anillo Aura' THEN 89000.00
 	WHEN 'Collar Numa' THEN 124000.00
