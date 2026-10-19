@@ -26,6 +26,10 @@ CREATE TABLE IF NOT EXISTS productos (
 
 ALTER TABLE productos ADD COLUMN IF NOT EXISTS descuento_porcentaje TINYINT UNSIGNED NOT NULL DEFAULT 0 AFTER stock;
 
+UPDATE productos SET nombre = 'Anillo Corazón Rosa', categoria = 'Anillos' WHERE nombre = 'Pulsera Corazón Rosa';
+UPDATE productos SET nombre = 'Collar Corazón Rosa' WHERE nombre = 'Collar Trenza Dorada';
+UPDATE productos SET nombre = 'Pulsera Charms Dorados' WHERE nombre = 'Pulsera Flor de Luz';
+
 CREATE TABLE IF NOT EXISTS pedidos (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	usuario_id INT UNSIGNED NOT NULL,
@@ -52,21 +56,21 @@ CREATE TABLE IF NOT EXISTS pedido_detalles (
 INSERT INTO productos (nombre, categoria, descripcion, precio, imagen, destacado)
 SELECT seed.nombre, seed.categoria, seed.descripcion, seed.precio, seed.imagen, seed.destacado
 FROM (
-	SELECT 'Anillo Aura' AS nombre, 'Anillos' AS categoria, 'Plata de ley con una silueta limpia y atemporal.' AS descripcion, 89000.00 AS precio, 'anillo-aura.jpg' AS imagen, 1 AS destacado
-	UNION ALL SELECT 'Collar Numa', 'Collares', 'Cadena fina con colgante dorado.', 124000.00, 'collar-numa.jpg', 1
-	UNION ALL SELECT 'Pendientes Vela', 'Pendientes', 'Pendientes ligeros para iluminar cualquier ocasión.', 68000.00, 'pendientes-vela.webp', 1
-	UNION ALL SELECT 'Pulsera Origen', 'Pulseras', 'Eslabones delicados y cierre seguro para todos los días.', 96000.00, 'pulsera-origen.webp', 0
+		SELECT 'Anillo Aura' AS nombre, 'Anillos' AS categoria, 'Anillo dorado con banda de zirconias y una piedra central en forma de corazón.' AS descripcion, 89000.00 AS precio, '598BDD34-AF32-4E98-A763-91D30EE6508A.jpg' AS imagen, 1 AS destacado
+		UNION ALL SELECT 'Collar Numa', 'Collares', 'Cadena dorada fina con dije de mariposa brillante, ligera y delicada para llevar todos los días.', 124000.00, '190D45D6-BE91-4866-B085-3833FE6ECF1C.PNG', 1
+		UNION ALL SELECT 'Pendientes Vela', 'Pendientes', 'Aros dorados colgantes con dijes de corazón rosa facetado, ideales para dar un toque luminoso.', 68000.00, '21A6D9AD-AC7D-4E29-92BB-FED325EE24BF.PNG', 1
+		UNION ALL SELECT 'Pulsera Origen', 'Pulseras', 'Pulsera dorada de eslabones finos con pequeños corazones y zirconias brillantes.', 96000.00, '46627DD2-7AE3-44FE-A697-3C5AD2AC1B31.PNG', 0
 ) AS seed
 WHERE NOT EXISTS (SELECT 1 FROM productos WHERE productos.nombre = seed.nombre);
 
 INSERT INTO productos (nombre, categoria, descripcion, precio, imagen, destacado)
 SELECT seed.nombre, seed.categoria, seed.descripcion, seed.precio, seed.imagen, 0
 FROM (
-	SELECT 'Anillo Brillo Eterno' AS nombre, 'Anillos' AS categoria, 'Anillo en plata de ley 925 con zirconias engastadas alrededor. Una silueta luminosa para usar a diario o en ocasiones especiales.' AS descripcion, 159000.00 AS precio, '192627C01_RGB.webp' AS imagen
-	UNION ALL SELECT 'Anillo Tres Luces', 'Anillos', 'Anillo en plata de ley 925 con tres zirconias brillantes en una montura delicada. Un diseño romántico y fácil de combinar.', 149000.00, '192232C01_RGB.webp'
-	UNION ALL SELECT 'Collar Trenza Dorada', 'Collares', 'Cadena de eslabones trenzados con acabado dorado y caída clásica. Una pieza versátil para llevar sola o combinar con colgantes.', 135000.00, '364687C00_RGB.webp'
-	UNION ALL SELECT 'Pulsera Flor de Luz', 'Pulseras', 'Pulsera de acabado plateado con un delicado detalle floral central. Ligera y elegante para completar looks cotidianos.', 118000.00, '45298916_x1.webp'
-	UNION ALL SELECT 'Pulsera Corazón Rosa', 'Pulseras', 'Pulsera de eslabones flexibles con dije de corazón y detalles rosados. Un acento delicado para combinar con otras piezas.', 112000.00, '925-Sterling-Silver-Zircon-Love-Heart-Simple-Bracelet-DIY-Bead-Making-Fit-Original-Pandora-Bracelets-Fine.jpg_350x350xz.jpg_.webp'
+	SELECT 'Anillo Brillo Eterno' AS nombre, 'Anillos' AS categoria, 'Anillo dorado con motivo de mariposa y zirconias que recorren la banda. Una pieza luminosa para ocasiones especiales.' AS descripcion, 159000.00 AS precio, '11BF4C95-3684-4E1A-9ECE-4211DF1B7AFB.PNG' AS imagen
+	UNION ALL SELECT 'Anillo Tres Luces', 'Anillos', 'Anillo dorado con diseño de mariposa y piedras brillantes engastadas en la banda.', 149000.00, 'FCDF8116-D45F-4BC8-83B7-3265993FD5D8.PNG'
+	UNION ALL SELECT 'Collar Corazón Rosa', 'Collares', 'Cadena dorada fina con un dije de corazón rosa facetado, delicado y fácil de combinar.', 135000.00, 'D832C7AE-9E88-4438-B7D1-67C179A111EE.PNG'
+	UNION ALL SELECT 'Pulsera Charms Dorados', 'Pulseras', 'Pulsera dorada con charms de corazones y destellos, un diseño alegre para combinar en capas.', 118000.00, '4B99930D-4FA5-4FEA-8FC8-4C38F5E7237C.PNG'
+	UNION ALL SELECT 'Anillo Corazón Rosa', 'Anillos', 'Anillo dorado con una piedra central en forma de corazón y zirconias alrededor de la banda.', 112000.00, 'FF523F97-EEFA-4E87-8AD0-2208E626CE2A.PNG'
 ) AS seed
 WHERE NOT EXISTS (SELECT 1 FROM productos WHERE productos.nombre = seed.nombre);
 
@@ -80,7 +84,12 @@ WHERE (nombre = 'Anillo Aura' AND precio = 89.00)
 	OR (nombre = 'Collar Numa' AND precio = 124.00)
 	OR (nombre = 'Pendientes Vela' AND precio = 68.00)
 	OR (nombre = 'Pulsera Origen' AND precio = 96.00);
-UPDATE productos SET imagen = 'anillo-aura.jpg' WHERE nombre = 'Anillo Aura';
-UPDATE productos SET imagen = 'collar-numa.jpg' WHERE nombre = 'Collar Numa';
-UPDATE productos SET imagen = 'pendientes-vela.webp' WHERE nombre = 'Pendientes Vela';
-UPDATE productos SET imagen = 'pulsera-origen.webp' WHERE nombre = 'Pulsera Origen';
+UPDATE productos SET descripcion = 'Anillo dorado con banda de zirconias y una piedra central en forma de corazón.', imagen = '598BDD34-AF32-4E98-A763-91D30EE6508A.jpg' WHERE nombre = 'Anillo Aura';
+UPDATE productos SET descripcion = 'Cadena dorada fina con dije de mariposa brillante, ligera y delicada para llevar todos los días.', imagen = '190D45D6-BE91-4866-B085-3833FE6ECF1C.PNG' WHERE nombre = 'Collar Numa';
+UPDATE productos SET descripcion = 'Aros dorados colgantes con dijes de corazón rosa facetado, ideales para dar un toque luminoso.', imagen = '21A6D9AD-AC7D-4E29-92BB-FED325EE24BF.PNG' WHERE nombre = 'Pendientes Vela';
+UPDATE productos SET descripcion = 'Pulsera dorada de eslabones finos con pequeños corazones y zirconias brillantes.', imagen = '46627DD2-7AE3-44FE-A697-3C5AD2AC1B31.PNG' WHERE nombre = 'Pulsera Origen';
+UPDATE productos SET descripcion = 'Anillo dorado con motivo de mariposa y zirconias que recorren la banda. Una pieza luminosa para ocasiones especiales.', imagen = '11BF4C95-3684-4E1A-9ECE-4211DF1B7AFB.PNG' WHERE nombre = 'Anillo Brillo Eterno';
+UPDATE productos SET descripcion = 'Anillo dorado con diseño de mariposa y piedras brillantes engastadas en la banda.', imagen = 'FCDF8116-D45F-4BC8-83B7-3265993FD5D8.PNG' WHERE nombre = 'Anillo Tres Luces';
+UPDATE productos SET descripcion = 'Cadena dorada fina con un dije de corazón rosa facetado, delicado y fácil de combinar.', imagen = 'D832C7AE-9E88-4438-B7D1-67C179A111EE.PNG' WHERE nombre = 'Collar Corazón Rosa';
+UPDATE productos SET descripcion = 'Pulsera dorada con charms de corazones y destellos, un diseño alegre para combinar en capas.', imagen = '4B99930D-4FA5-4FEA-8FC8-4C38F5E7237C.PNG' WHERE nombre = 'Pulsera Charms Dorados';
+UPDATE productos SET descripcion = 'Anillo dorado con una piedra central en forma de corazón y zirconias alrededor de la banda.', imagen = 'FF523F97-EEFA-4E87-8AD0-2208E626CE2A.PNG' WHERE nombre = 'Anillo Corazón Rosa';
