@@ -23,6 +23,8 @@ El proyecto incluye registro, inicio de sesión, catálogo, carrito, checkout, p
 
 ## Acceso y administración
 
-En una base de datos vacía, la primera cuenta registrada obtiene el rol de administradora. Después de iniciar sesión, abre **Mi perfil** y entra en **Administración**. Desde allí puedes agregar y editar productos, ajustar existencias, publicar u ocultar artículos, cargar fotografías JPG/PNG/WebP de hasta 5 MB, aplicar descuentos de hasta el 90 %, asignar permisos y actualizar pedidos. Los descuentos se reflejan en el catálogo, el carrito y el total guardado en el pedido.
+El registro permite elegir entre cliente y administradora. El código predeterminado para crear cuentas admin es `482731`. Para cambiarlo, configura `JOYERIA_ADMIN_CODE` como variable de entorno de Apache; por ejemplo, añade `SetEnv JOYERIA_ADMIN_CODE "reemplaza-por-un-codigo-secreto-largo"` en `C:\xampp\apache\conf\httpd.conf` y reinicia Apache. Comparte el código solo con las personas autorizadas; cambia el valor predeterminado antes de publicar la tienda. Puedes crear varios administradores con el mismo código; las cuentas existentes no cambian.
+
+Después de iniciar sesión, abre **Mi perfil** y entra en **Administración**. Desde allí puedes agregar y editar productos, ajustar existencias, publicar u ocultar artículos, cargar fotografías JPG/PNG/WebP de hasta 5 MB, aplicar descuentos de hasta el 90 %, asignar permisos y actualizar pedidos. Los descuentos se reflejan en el catálogo, el carrito y el total guardado en el pedido.
 
 Si ya habías creado las tablas con una versión anterior, volver a importar el archivo no las actualiza porque usa `CREATE TABLE IF NOT EXISTS`. Haz una copia de seguridad y aplica las columnas y tablas que falten según sus definiciones en `database/joyerias.sql`.

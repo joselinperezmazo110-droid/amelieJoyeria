@@ -28,7 +28,7 @@ h1, h2, h3, h1 em, h2 em, h3 em, .hero-copy h1 em, .hero-visual h2 em,
 .page-intro h1 em, .auth h1 em, .profile h1 em { color: var(--ink); }
 .hero-copy > p:not(.eyebrow) { max-width: 410px; color: var(--muted); }
 .hero-visual { display: flex; flex-direction: column; align-items: flex-start; max-width: 470px; }
-.hero-visual img { order: 1; display: block; width: 100%; height: clamp(280px, 34vw, 410px); object-fit: cover; }
+.hero-visual img { order: 1; display: block; width: 100%; height: clamp(220px, 24vw, 300px); object-fit: contain; background: #ece8df; }
 .hero-visual .eyebrow { order: 0; margin: 0 0 8px; }
 .hero-visual h2 { order: 2; margin: 17px 0 4px; font-size: 27px; font-weight: 400; line-height: 1.2; }
 .hero-visual > p:not(.eyebrow) { order: 3; margin: 4px 0 12px; color: var(--muted); font-size: 13px; }
@@ -45,6 +45,16 @@ h1, h2, h3, h1 em, h2 em, h3 em, .hero-copy h1 em, .hero-visual h2 em,
 .detail-image { position: relative; }
 .detail-prices { align-items: flex-start; }
 .detail-prices .price { margin: 0; color: var(--rose); }
+
+.account-type { min-width: 0; margin: 0; padding: 0; border: 0; }
+.account-type legend { margin-bottom: 7px; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+.account-type-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.account-type-options label { display: block; cursor: pointer; }
+.account-type-options input { position: absolute; opacity: 0; }
+.account-type-options span { display: block; padding: 10px 12px; border: 1px solid var(--line); background: #fffdfa; color: var(--muted); font-size: 12px; text-align: center; text-transform: none; }
+.account-type-options input:checked + span { border-color: var(--sage); background: var(--sage-pale); color: var(--sage); }
+.account-type-options input:focus-visible + span { outline: 2px solid var(--sage); outline-offset: 2px; }
+.admin-code-field[hidden] { display: none; }
 
 .admin-heading { padding-top: 54px; padding-bottom: 24px; }
 .profile h1.profile-greeting { color: var(--ink); }
@@ -117,7 +127,7 @@ h1, h2, h3, h1 em, h2 em, h3 em, .hero-copy h1 em, .hero-visual h2 em,
 	.hero-copy { padding: 8px 0; }
 	.hero-copy h1 { font-size: 43px; }
 	.hero-visual { width: 100%; max-width: none; }
-	.hero-visual img { height: 320px; }
+	.hero-visual img { height: 240px; }
 	.section-heading { align-items: end; gap: 12px; }
 	.section-heading h2 { font-size: 27px; }
 	.admin-heading { padding-top: 34px; }
